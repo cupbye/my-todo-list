@@ -38,6 +38,8 @@ function App() {
 
   const dateKey = format(selectedDate, 'yyyy-MM-dd');
   const currentTodos = todos.filter(t => t.date === dateKey);
+  const pendingTodos = currentTodos.filter(t => !t.completed);
+  const completedTodos = currentTodos.filter(t => t.completed);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
@@ -202,32 +204,62 @@ function App() {
         </button>
       </form>
 
-      <ul className="todo-list">
-        {currentTodos.length > 0 ? (
-          currentTodos.map(todo => (
-            <li key={todo.id} className={`todo-item ${todo.completed ? 'completed' : ''}`}>
-              <span
-                className="todo-text"
-                onClick={() => toggleComplete(todo.id, todo.completed)}
-              >
-                {todo.text}
-              </span>
-              <button
-                onClick={() => deleteTodo(todo.id)}
-                className="delete-btn"
-                aria-label="Delete todo"
-              >
-                <Trash2 size={20} />
-              </button>
-            </li>
-          ))
-        ) : (
-          <div className="empty-state">
-            <CheckCircle2 size={48} style={{ marginBottom: '12px', opacity: 0.5 }} />
-            <p>이 날짜에는 할 일이 없습니다.</p>
+      <div className="todo-sections">
+        <div className="todo-section">
+          <h3>할 일 <span>{pendingTodos.length}</span></h3>
+          <ul className="todo-list">
+            {pendingTodos.length > 0 ? (
+              pendingTodos.map(todo => (
+                <li key={todo.id} className="todo-item">
+                  <span
+                    className="todo-text"
+                    onClick={() => toggleComplete(todo.id, todo.completed)}
+                  >
+                    {todo.text}
+                  </span>
+                  <button
+                    onClick={() => deleteTodo(todo.id)}
+                    className="delete-btn"
+                    aria-label="Delete todo"
+                  >
+                    <Trash2 size={20} />
+                  </button>
+                </li>
+              ))
+            ) : (
+              <div className="empty-state">
+                <CheckCircle2 size={32} style={{ marginBottom: '8px', opacity: 0.3 }} />
+                <p>할 일이 없습니다.</p>
+              </div>
+            )}
+          </ul>
+        </div>
+
+        {completedTodos.length > 0 && (
+          <div className="todo-section completed-section">
+            <h3>완료됨 <span>{completedTodos.length}</span></h3>
+            <ul className="todo-list">
+              {completedTodos.map(todo => (
+                <li key={todo.id} className="todo-item completed">
+                  <span
+                    className="todo-text"
+                    onClick={() => toggleComplete(todo.id, todo.completed)}
+                  >
+                    {todo.text}
+                  </span>
+                  <button
+                    onClick={() => deleteTodo(todo.id)}
+                    className="delete-btn"
+                    aria-label="Delete todo"
+                  >
+                    <Trash2 size={20} />
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
-      </ul>
+      </div>
     </div>
   );
 }

@@ -205,6 +205,43 @@ input:focus {
   transform: translateY(-2px);
 }
 
+.todo-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.todo-section h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.todo-section h3 span {
+  font-size: 0.75rem;
+  background: var(--glass-border);
+  padding: 2px 8px;
+  border-radius: 10px;
+  color: var(--primary);
+}
+
+.completed-section {
+  opacity: 0.8;
+  border-top: 1px solid var(--glass-border);
+  padding-top: 1.5rem;
+}
+
+.completed-section h3 span {
+  color: var(--text-muted);
+}
+
 .todo-list {
   list-style: none;
   display: flex;
